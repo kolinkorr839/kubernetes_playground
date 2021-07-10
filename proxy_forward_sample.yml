@@ -1,5 +1,6 @@
-# k port-forward <pod_name> 32000:80
+# k port-forward <pod_name> --address 0.0.0.0 32000:80
 # curl http://localhost:80
+# on your mac, you can just hit the brower http://localhost:32000
 
 apiVersion: apps/v1
 kind: Deployment
