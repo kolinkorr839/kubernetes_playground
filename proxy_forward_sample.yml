@@ -1,0 +1,41 @@
+# k port-forward <pod_name> 32000:80
+# curl http://localhost:80
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: nginx
+    app: proxy
+  name: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mywebserver
+  labels:
+    run: nginx
+    app: proxy
+spec:
+  selector:
+    app: nginx
+  ports:
+  - port: 32000
+    name: nginx
+    targetPort: 80
+  type: ClusterIP
